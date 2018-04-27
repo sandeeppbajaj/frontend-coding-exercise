@@ -1,11 +1,14 @@
 .live-map {
-    flex-grow: 1;
+    flex-grow: 10;
     height: 700px;
 }
 
 .marker {
-    background: #FFFFFF;
+    background: red;
+    color: #FFFFFF;
     font-weight: bolder;
-    width: 40px;
+    width: 25px;
+    text-align: center;
     border: 1px black solid;
+    border-radius: 10px;
 }

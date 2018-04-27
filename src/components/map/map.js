@@ -4,17 +4,26 @@ import './map.css';
 
 class Map extends Component {
     static defaultProps = {
-        center: { lat: 37.7749, lng: -122.4194 },
-        zoom: 14
+        center: {lat: 45.4835629, lng: -122.5948495},
+        zoom: 12
     };
 
     render() {
+        debugger;
         return (
             <div className="live-map">
                 <GoogleMapReact
-                    defaultCenter={ this.props.center }
-                    defaultZoom={ this.props.zoom }>
-                    <div className="marker" lat={this.props.center.lat} lng={this.props.center.lng}>Test Loc</div>
+                    defaultCenter={this.props.center}
+                    defaultZoom={this.props.zoom}>
+                    {this.props.transports.map((trans) => {
+                        return (
+                            <div key={trans.entity[0].id} className="marker"
+                                 lat={trans.entity[0].vehicle.position.latitude}
+                                 lng={trans.entity[0].vehicle.position.longitude}>
+                                {trans.entity[0].vehicle.trip.route_id}
+                            </div>
+                        );
+                    })}
                 </GoogleMapReact>
             </div>
         );
