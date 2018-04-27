@@ -3,12 +3,21 @@ import './list.css';
 
 class List extends Component {
     render() {
+        let rows = [];
+        this.props.routesMap.forEach((route) => {
+            let styles = {backgroundColor: route.color};
+            rows.push(
+                <li key={route.label}>
+                    <span className="route-color" style={styles}/>{route.label} - {route.vehicles.size}
+                </li>);
+        });
         return (
             <div className="route-list">
+                <div>
+                    Routes:
+                </div>
                 <ul>
-                    {this.props.transports.map((trans) => {
-                        return (<li key={trans.entity[0].id}>{trans.entity[0].vehicle.vehicle.label}</li>);
-                    })}
+                    {rows}
                 </ul>
             </div>
         );

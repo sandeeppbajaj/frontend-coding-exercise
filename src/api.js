@@ -40,4 +40,8 @@ function subscribeToTransportData(cb) {
     client.start();
 }
 
-export { subscribeToTransportData }
+function unsubscribeToTransportData() {
+    client.unsubscribe(channel);
+}
+
+export { subscribeToTransportData, unsubscribeToTransportData }

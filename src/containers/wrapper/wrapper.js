@@ -1,71 +1,86 @@
 import React, {Component} from 'react';
 import List from '../../components/list/list';
-import Map from '../../components/map/map';
+import MapComponent from '../../components/map/mapComponent';
+import {subscribeToTransportData, unsubscribeToTransportData} from '../../api';
 import './wrapper.css';
 
 class Wrapper extends Component {
-    static defaultProps = {
-        transportationList: [
-            {
-                "header": {
-                    "gtfs_realtime_version": "1",
-                    "incrementality": 0,
-                    "timestamp": 1524802592,
-                    "user-data": "trimet"
-                },
-                "entity": [
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            vehicleMap: new Map(),
+            routesMap: new Map(),
+            msg: {
+                entity: [
                     {
-                        "id": "3733",
-                        "vehicle": {
-                            "trip": {
-                                "trip_id": "8218421",
-                                "route_id": "72"
-                            },
-                            "vehicle": {
-                                "id": "3733",
-                                "label": "72 Swan Island"
-                            },
-                            "position": {
-                                "latitude": 45.55716,
-                                "longitude": -122.701866,
-                                "bearing": 308
-                            },
-                            "current_stop_sequence": 105,
-                            "stop_id": "115",
-                            "current_status": 2,
-                            "timestamp": 1524802589
-                        }
+                        id: 'Not Received'
                     }
                 ]
-            },
-            {
-                "header": {
-                    "gtfs_realtime_version": "1",
-                    "incrementality": 0,
-                    "timestamp": 1524802592,
-                    "user-data": "trimet"
-                },
-                "entity": [{
-                    "id": "3571",
-                    "vehicle": {
-                        "trip": {"trip_id": "8214500", "route_id": "33"},
-                        "vehicle": {"id": "3571", "label": "33 To Clackamas Town Center"},
-                        "position": {"latitude": 45.43828, "longitude": -122.576294, "bearing": 89},
-                        "current_stop_sequence": 77,
-                        "stop_id": "12921",
-                        "current_status": 2,
-                        "timestamp": 1524802587
-                    }
-                }]
             }
-        ]
-    };
+        };
+
+        this.processMessage = this.processMessage.bind(this);
+        subscribeToTransportData(this.processMessage);
+    }
+
+    processMessage(err, msg) {
+        if (msg.entity[0].vehicle.vehicle.label) {
+            let label = msg.entity[0].vehicle.vehicle.label;
+            let vehicleId = msg.entity[0].vehicle.vehicle.id;
+            let position = msg.entity[0];
+            let color;
+
+            if (!this.state.routesMap.get(label)) {
+                color = Wrapper.getRandomColor();
+                let vehicles = new Set();
+                vehicles.add(vehicleId);
+                this.state.routesMap.set(label, {
+                    label: label,
+                    vehicles: vehicles,
+                    color: color
+                });
+            } else {
+                let route = this.state.routesMap.get(label);
+                color = route.color;
+                route.vehicles.add(vehicleId);
+                this.state.routesMap.set(label, route);
+            }
+
+            position.color = color;
+            this.state.vehicleMap.set(vehicleId, position);
+
+            this.setState({
+                vehicleMap: this.state.vehicleMap
+            });
+        }
+    }
+
+    static getRandomColor() {
+        let letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    static unsubscribe() {
+        console.log('Disconnecting');
+        unsubscribeToTransportData();
+    }
 
     render() {
         return (
-            <div className="wrapper">
-                <List transports={this.props.transportationList}/>
-                <Map transports={this.props.transportationList}/>
+            <div>
+                <div className="wrapper">
+                    <List routesMap={this.state.routesMap}/>
+                    <MapComponent vehicleMap={this.state.vehicleMap}/>
+                </div>
+                <div>
+                    <button onClick={Wrapper.unsubscribe}>Stop Refresh</button>
+                </div>
             </div>
         );
     }

@@ -1,3 +1,18 @@
 .route-list {
     flex-grow: 1;
+    text-align: left;
+    max-height: 700px;
+    overflow-y: scroll;
+}
+
+.route-list ul{
+    list-style-type: none;
+}
+
+.route-color {
+    background: white;
+    width: 10px;
+    height: 10px;
+    margin-right: 10px;
+    display: inline-block;
 }

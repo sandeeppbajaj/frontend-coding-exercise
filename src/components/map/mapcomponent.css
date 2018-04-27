@@ -1,5 +1,5 @@
 .live-map {
-    flex-grow: 10;
+    flex-grow: 6;
     height: 700px;
 }
 
@@ -7,7 +7,7 @@
     background: red;
     color: #FFFFFF;
     font-weight: bolder;
-    width: 25px;
+    width: 40px;
     text-align: center;
     border: 1px black solid;
     border-radius: 10px;

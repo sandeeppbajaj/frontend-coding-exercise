@@ -7,7 +7,9 @@
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-scripts": "1.1.4",
-    "satori-rtm-sdk": "^1.2.2"
+    "satori-rtm-sdk": "^1.2.2",
+    "socket.io": "^2.1.0",
+    "socket.io-client": "^2.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
