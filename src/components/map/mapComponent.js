@@ -12,12 +12,14 @@ class MapComponent extends Component {
         let rows = [];
         this.props.vehicleMap.forEach((vehicle, vehicleId) => {
             let styles = {backgroundColor: vehicle.color};
-            rows.push(<div key={vehicleId} className="marker"
-                           lat={vehicle.vehicle.position.latitude}
-                           lng={vehicle.vehicle.position.longitude}
-                           style={styles}>
-                {vehicleId}
-            </div>);
+            if(!this.props.routeFilter || vehicle.vehicle.vehicle.label === this.props.routeFilter){
+                rows.push(<div key={vehicleId} className="marker"
+                               lat={vehicle.vehicle.position.latitude}
+                               lng={vehicle.vehicle.position.longitude}
+                               style={styles}>
+                    {vehicleId}
+                </div>);
+            }
         });
 
         return (

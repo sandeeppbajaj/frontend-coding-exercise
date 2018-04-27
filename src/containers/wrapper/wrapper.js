@@ -12,6 +12,7 @@ class Wrapper extends Component {
         this.state = {
             vehicleMap: new Map(),
             routesMap: new Map(),
+            routeFilter: '',
             msg: {
                 entity: [
                     {
@@ -22,6 +23,8 @@ class Wrapper extends Component {
         };
 
         this.processMessage = this.processMessage.bind(this);
+        this.clearFilter = this.clearFilter.bind(this);
+        this.filterForRoute = this.filterForRoute.bind(this);
         subscribeToTransportData(this.processMessage);
     }
 
@@ -71,14 +74,27 @@ class Wrapper extends Component {
         unsubscribeToTransportData();
     }
 
+    filterForRoute(route) {
+        this.setState({
+           routeFilter: route.label
+        });
+    }
+
+    clearFilter(){
+        this.setState({
+            routeFilter: ''
+        });
+    }
+
     render() {
         return (
             <div>
                 <div className="wrapper">
-                    <List routesMap={this.state.routesMap}/>
-                    <MapComponent vehicleMap={this.state.vehicleMap}/>
+                    <List routesMap={this.state.routesMap} filter={this.filterForRoute}/>
+                    <MapComponent vehicleMap={this.state.vehicleMap} routeFilter={this.state.routeFilter}/>
                 </div>
                 <div>
+                    <button onClick={this.clearFilter}>Clear Filter</button>
                     <button onClick={Wrapper.unsubscribe}>Stop Refresh</button>
                 </div>
             </div>

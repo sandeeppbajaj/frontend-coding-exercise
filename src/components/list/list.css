@@ -16,3 +16,7 @@
     margin-right: 10px;
     display: inline-block;
 }
+
+.route-item {
+    cursor: pointer;
+}
