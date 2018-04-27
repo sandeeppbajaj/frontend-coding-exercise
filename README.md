@@ -1,10 +1,15 @@
 ## frontend-coding-exercise
 
+Pre-requisite:
+```npm install create-react-app -g```
+
 Steps to run:
 
-Local
-1. yarn install or npm install
-2. yarn start or npm run start
+Local:
+```
+npm install
+npm run start
+```
 
 Output:
 [http://localhost:3000](http://localhost:3000)
