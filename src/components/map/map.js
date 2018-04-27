@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import GoogleMapReact from 'google-map-react'
+import GoogleMapReact from 'google-map-react';
 import './map.css';
 
 class Map extends Component {
@@ -14,6 +14,7 @@ class Map extends Component {
                 <GoogleMapReact
                     defaultCenter={ this.props.center }
                     defaultZoom={ this.props.zoom }>
+                    <div className="marker" lat={this.props.center.lat} lng={this.props.center.lng}>Test Loc</div>
                 </GoogleMapReact>
             </div>
         );

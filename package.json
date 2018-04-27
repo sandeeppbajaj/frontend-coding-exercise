@@ -6,7 +6,8 @@
     "google-map-react": "^0.34.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "satori-rtm-sdk": "^1.2.2"
   },
   "scripts": {
     "start": "react-scripts start",
