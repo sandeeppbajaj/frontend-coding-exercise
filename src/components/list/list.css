@@ -1,7 +1,7 @@
 .route-list {
     flex-grow: 1;
     text-align: left;
-    max-height: 700px;
+    max-height: 650px;
     overflow-y: scroll;
 }
 
